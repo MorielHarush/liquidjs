@@ -61,7 +61,11 @@ export class Loader {
     }
     if (fs.fallback !== undefined) {
       const filepath = fs.fallback(file)
-      if (filepath !== undefined) yield filepath
+      if (filepath !== undefined) {
+        if (!enforceRoot || dirs.some(dir => this.contains(dir, filepath))) {
+          yield filepath
+        }
+      }
     }
   }
 
